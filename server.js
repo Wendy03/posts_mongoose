@@ -73,6 +73,8 @@ const requestListener = async (req, res) => {
         errorHandler(res, 400, '資料錯誤');
       }
     });
+  } else if (req.url === '/posts' && req.method === 'OPTIONS') {
+    successHandler(res, 'OPTIONS');
   } else {
     errorHandler(res, 404, '無此網頁');
   }
