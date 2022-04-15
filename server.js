@@ -47,6 +47,10 @@ const requestListener = async (req, res) => {
   } else if (req.url === '/posts' && req.method === 'DELETE') {
     const posts = await Post.deleteMany({});
     successHandler(res, posts);
+  } else if (req.url.startsWith('/posts/') && req.method === 'DELETE') {
+    const id = req.url.split('/').pop();
+    const posts = await Post.findByIdAndDelete(id);
+    successHandler(res, posts);
   } else {
     errorHandler(res, 404, '無此網頁');
   }
