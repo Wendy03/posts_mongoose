@@ -51,6 +51,28 @@ const requestListener = async (req, res) => {
     const id = req.url.split('/').pop();
     const posts = await Post.findByIdAndDelete(id);
     successHandler(res, posts);
+  } else if (req.url.startsWith('/posts/') && req.method === 'PATCH') {
+    req.on('end', async () => {
+      try {
+        const data = JSON.parse(body);
+        const id = req.url.split('/').pop();
+        if (data !== undefined) {
+          let { content, image, likes } = data;
+          const posts = await Post.findByIdAndUpdate(id, {
+            $set: {
+              content,
+              image,
+              likes,
+            },
+          });
+          successHandler(res, posts);
+        } else {
+          errorHandler(res, 400, '查無此 id');
+        }
+      } catch (err) {
+        errorHandler(res, 400, '資料錯誤');
+      }
+    });
   } else {
     errorHandler(res, 404, '無此網頁');
   }
