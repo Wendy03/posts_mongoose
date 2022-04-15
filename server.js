@@ -29,7 +29,7 @@ const requestListener = async (req, res) => {
     req.on('end', async () => {
       try {
         const data = JSON.parse(body);
-        if (data !== undefined) {
+        if (data.content !== '') {
           let { name, content, image } = data;
           const newPost = await Post.create({
             name,
@@ -56,7 +56,7 @@ const requestListener = async (req, res) => {
       try {
         const data = JSON.parse(body);
         const id = req.url.split('/').pop();
-        if (data !== undefined) {
+        if (data.content !== '') {
           let { content, image, likes } = data;
           const posts = await Post.findByIdAndUpdate(id, {
             $set: {
@@ -67,7 +67,7 @@ const requestListener = async (req, res) => {
           });
           successHandler(res, posts);
         } else {
-          errorHandler(res, 400, '查無此 id');
+          errorHandler(res, 400, 'content必填');
         }
       } catch (err) {
         errorHandler(res, 400, '資料錯誤');
