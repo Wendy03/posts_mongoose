@@ -4,9 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
+  "engines": {
+    "node": "v16.x"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
