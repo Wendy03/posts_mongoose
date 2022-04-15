@@ -44,6 +44,9 @@ const requestListener = async (req, res) => {
         errorHandler(res, 400, '資料錯誤');
       }
     });
+  } else if (req.url === '/posts' && req.method === 'DELETE') {
+    const posts = await Post.deleteMany({});
+    successHandler(res, posts);
   } else {
     errorHandler(res, 404, '無此網頁');
   }
