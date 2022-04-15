@@ -25,6 +25,25 @@ const requestListener = async (req, res) => {
   if (req.url === '/posts' && req.method === 'GET') {
     const posts = await Post.find();
     successHandler(res, posts);
+  } else if (req.url === '/posts' && req.method === 'POST') {
+    req.on('end', async () => {
+      try {
+        const data = JSON.parse(body);
+        if (data !== undefined) {
+          let { name, content, image } = data;
+          const newPost = await Post.create({
+            name,
+            content,
+            image,
+          });
+          successHandler(res, newPost);
+        } else {
+          errorHandler(res, 400, '資料錯誤');
+        }
+      } catch (err) {
+        errorHandler(res, 400, '資料錯誤');
+      }
+    });
   } else {
     errorHandler(res, 404, '無此網頁');
   }
