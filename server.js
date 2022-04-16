@@ -30,11 +30,12 @@ const requestListener = async (req, res) => {
       try {
         const data = JSON.parse(body);
         if (data.content !== '') {
-          let { name, content, image } = data;
+          let { name, content, image, createdAt } = data;
           const newPost = await Post.create({
             name,
             content,
             image,
+            createdAt,
           });
           successHandler(res, newPost);
         } else {

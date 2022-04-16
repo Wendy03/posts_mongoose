@@ -5,6 +5,11 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: [true, '貼文姓名未填寫'],
     },
+    avatar: {
+      type: String,
+      default:
+        'blob:https://xd.adobe.com/43d7e2d1-ea5e-41cd-acc7-09b9106c77c6',
+    },
     content: {
       type: String,
       required: [true, 'Content 未填寫'],
@@ -16,7 +21,6 @@ const postSchema = new mongoose.Schema(
     createdAt: {
       type: Date,
       default: Date.now(),
-      select: false,
     },
     likes: {
       type: Number,
